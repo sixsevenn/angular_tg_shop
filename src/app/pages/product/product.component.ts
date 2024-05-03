@@ -15,7 +15,6 @@ import { ActivatedRoute, Router } from '@angular/router';
       <p>{{ product.text }}</p>
       <p>{{ product.time }}</p>
       <a [href]="product.link" target="_blank">Посмотреть курс</a>
-
     </div>
   
   `,
@@ -35,7 +34,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.router.navigate(['']);
+    this.router.navigate(['/']);
   }
 
   ngOnInit(): void {

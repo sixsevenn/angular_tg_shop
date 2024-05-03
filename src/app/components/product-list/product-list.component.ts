@@ -7,8 +7,8 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [RouterLink],
   template: `
-  <h2>{{ title }}</h2>
-  <h4>{{subtitle}}</h4>
+  <h2 class="mb">{{ title }}</h2>
+  <h4 class="mb">{{subtitle}}</h4>
   <ul class="products">
     @for (product of products; track product.id) {
       <li class="product-item" [routerLink]="'/product/' + product.id">

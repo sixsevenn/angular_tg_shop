@@ -41,7 +41,7 @@ const products: IProduct[] = [
     id: '30',
     title: 'Git и GitHub',
     link: '/products/git',
-    image: '/img/icons/products/icon-git.svg',
+    image: '',
     text: 'BLD, история версий, ветвление, удаленный репозиторий\
     релизы, opensourse ...',
     time: 'С опытом 2 недели',
