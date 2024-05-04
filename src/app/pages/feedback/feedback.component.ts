@@ -13,7 +13,6 @@ import { TelegramService } from '../../services/telegram.service';
   template: `
   <form class="centered form">
     <h2 class="mb">Обратная связь</h2>
-    <h4>{{ feedback() }}</h4>
     <textarea 
       [value]="feedback()" 
       (input)="handleChange($event)" 

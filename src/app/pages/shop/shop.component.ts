@@ -20,15 +20,44 @@ import { ProductListComponent } from '../../components/product-list/product-list
     </head>
     
     <body>
+      <div class="two_cards">
+
+      </div>
       <div class="wrapper">
         <div class="card">
+          <div class="img_div">
           <img class="card-img" src="assets/image/boul-s-kur.jpeg" >
-          <div class="card-title">Поке с курочкой (рис) Средний</div>
+          </div>
+         
+          <div class="card-title">Поке с курочкой (рис) <br> Средний</div>
+
+          <div class="btn-keeper">
+            <a class="btn" href="#">Заказать</a>
+          </div>
+
+          <div class="price">459 ₽</div> 
+          <div class="weight">340 г</div>
+
+        </div>
+        <div class="card">
+          <div class="img_div">
+            <img class="card-img" src="assets/image/boul-s-kur.jpeg" >
+          </div>
+          <div class="card-title">Поке с курочкой (рис) <br> Средний</div>
+
+          <div class="btn-keeper">
+            <a class="btn" href="#">Заказать</a>
+          </div>
+
+          <div class="price">459 ₽</div> 
+          <div class="weight">340 г</div>
+
         </div>
       </div>
+
+
     </body>
-
-
+   
     </html>
     
   `,
