@@ -18,8 +18,8 @@ body {
 .card {
     background: linear-gradient(to top, #B7DB39,#E9DC5E);
     height: 70vw;
-    width: 70%; /* При уменьшении экрана карточки займут всю ширину */
-    margin-right: 7%; /* Убираем отступ между карточками */
+    width: 37.5vw;
+    margin-right: 7.5%; /* Убираем отступ между карточками */
     margin-bottom: 4%; /* Добавляем отступ снизу для разделения карточек */
     border-radius: 7vw;
     box-shadow: 2.5vw 2.5px 7vw #434040;
@@ -45,7 +45,12 @@ body {
 .card-title {
     margin-top: -6%;
     margin-left: 7%;
-    font-size: 3vw;
+    margin-right: 7%;
+    font-size: 2.8vw;
+    height: 9vw; /* Фиксированная высота */
+    overflow: hidden; /* Скрытие лишнего текста */
+    white-space: nowrap; /* Запрет переноса текста на новую строку */
+    text-overflow: ellipsis; 
     font-weight: 600;
 }
 
