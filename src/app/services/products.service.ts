@@ -11,6 +11,13 @@ export enum ProductType {
   Goodies = 'goodies', /* вкусности */
 }
 
+export enum ProductSize {
+  Small = 'small',
+  Average = 'average',
+  Large = 'large',
+  Standard = 'standard'
+}
+
 export interface IProduct {
   id: string;
   title: string;
@@ -21,6 +28,7 @@ export interface IProduct {
   weight: number;
   structure: string; /* состав */
   nutritional_value: string; /* пищевая ценность: бжу */
+  size: ProductSize;
   type: ProductType;
 }
 
@@ -43,6 +51,7 @@ const products: IProduct[] = [
     weight: 200,
     structure: 'Тунец, рис, авокадо, огурцы, соусы',
     nutritional_value: 'Белки: 25г, Жиры: 10г, Углеводы: 35г',
+    size: ProductSize.Small,
     type: ProductType.Poke,
   },
   {
@@ -55,6 +64,7 @@ const products: IProduct[] = [
     weight: 204,
     structure: 'Куриное мясо, рис, авокадо, огурцы, соусы',
     nutritional_value: 'Белки: 20г, Жиры: 8г, Углеводы: 30г',
+    size: ProductSize.Average,
     type: ProductType.Poke,
   },
   {
@@ -67,6 +77,7 @@ const products: IProduct[] = [
     weight: 29,
     structure: 'Куриное мясо, листовой салат, сухарики, соус Цезарь',
     nutritional_value: 'Белки: 15г, Жиры: 12г, Углеводы: 25г',
+    size: ProductSize.Large,
     type: ProductType.Salad,
   },
   {
@@ -79,6 +90,7 @@ const products: IProduct[] = [
     weight: 2,
     structure: 'Огурцы, помидоры, сыр фета, маслины, оливковое масло',
     nutritional_value: 'Белки: 10г, Жиры: 15г, Углеводы: 20г',
+    size: ProductSize.Small,
     type: ProductType.Salad,
   },
   {
@@ -91,6 +103,7 @@ const products: IProduct[] = [
     weight: 800,
     structure: 'Овсянка, молоко, фрукты',
     nutritional_value: 'Белки: 7г, Жиры: 3г, Углеводы: 40г',
+    size: ProductSize.Small,
     type: ProductType.Porridge,
   },
   {
@@ -103,6 +116,7 @@ const products: IProduct[] = [
     weight: 100,
     structure: 'Молоко, банан, мед, ваниль',
     nutritional_value: 'Белки: 5г, Жиры: 3г, Углеводы: 30г',
+    size: ProductSize.Small,
     type: ProductType.Milkshake,
   },
   {
@@ -115,7 +129,9 @@ const products: IProduct[] = [
     weight: 500,
     structure: 'Шпинат, банан, яблоко, апельсин',
     nutritional_value: 'Белки: 5г, Жиры: 2г, Углеводы: 25г',
+    size: ProductSize.Average,
     type: ProductType.Smoothie,
+    
   },
   {
     id: '8',
@@ -127,6 +143,7 @@ const products: IProduct[] = [
     weight: 270,
     structure: 'Фрукты, ягоды, сироп, шоколад',
     nutritional_value: 'Белки: 2г, Жиры: 5г, Углеводы: 20г',
+    size: ProductSize.Standard,
     type: ProductType.Goodies,
   },
   {
@@ -139,6 +156,7 @@ const products: IProduct[] = [
     weight: 210,
     structure: 'Лаваш, индейка, овощи, соус',
     nutritional_value: 'Белки: 15г, Жиры: 8г, Углеводы: 30г',
+    size: ProductSize.Standard,
     type: ProductType.Poke,
   },
   {
@@ -151,6 +169,7 @@ const products: IProduct[] = [
     weight: 220,
     structure: 'Говядина, мука, вода',
     nutritional_value: 'Белки: 15г, Жиры: 8г, Углеводы: 30г',
+    size: ProductSize.Standard,
     type: ProductType.Goodies,
   }
 ];
