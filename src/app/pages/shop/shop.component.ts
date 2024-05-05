@@ -20,9 +20,7 @@ import { ProductListComponent } from '../../components/product-list/product-list
     </head>
     
     <body>
-      <div class="two_cards">
 
-      </div>
       <div class="wrapper">
         <div class="card">
           <div class="img_div">
