@@ -17,11 +17,11 @@ body {
   
 .card {
     background: linear-gradient(to top, #B7DB39,#E9DC5E);
-    height: 70vw;
+    height: 65vw;
     width: 37.5vw;
     margin-right: 7.5%; /* Убираем отступ между карточками */
     margin-bottom: 4%; /* Добавляем отступ снизу для разделения карточек */
-    border-radius: 7vw;
+    border-radius: 6vw;
     box-shadow: 2.5vw 2.5px 7vw #434040;
     display: inline-block; /* Размещение карточек в ряд */
     vertical-align: top; /* Выравнивание карточек по верхнему краю */
@@ -55,7 +55,7 @@ body {
 }
 
 .btn-keeper {
-    margin-top: 12.5vw; /* скорее всего нужно сделать отступ от другого объекта например, который не зависит от текста*/
+    margin-top: 9.5vw; /* скорее всего нужно сделать отступ от другого объекта например, который не зависит от текста*/
     margin-left: 15vw;
     height: 10vw;
     width: 10vw;
