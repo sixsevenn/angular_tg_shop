@@ -12,12 +12,12 @@ body {
 
 .wrapper {
     display:flex;
-    margin-left: 4vw;
+    margin-left: 5vw;
 }
   
 .card {
     background: linear-gradient(to top, #B7DB39,#E9DC5E);
-    height: 65vw;
+    height: 58vw;
     width: 37.5vw;
     margin-right: 7.5%; /* Убираем отступ между карточками */
     margin-bottom: 4%; /* Добавляем отступ снизу для разделения карточек */
@@ -55,7 +55,7 @@ body {
 }
 
 .btn-keeper {
-    margin-top: 9.5vw; /* скорее всего нужно сделать отступ от другого объекта например, который не зависит от текста*/
+    margin-top: 2vw; /* скорее всего нужно сделать отступ от другого объекта например, который не зависит от текста*/
     margin-left: 15vw;
     height: 10vw;
     width: 10vw;
