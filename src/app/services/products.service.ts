@@ -17,6 +17,8 @@ export interface IProduct {
   description: string;
   link: string;
   image: string;
+  price: number;
+  weight: number;
   structure: string; /* состав */
   nutritional_value: string; /* пищевая ценность: бжу */
   type: ProductType;
@@ -37,6 +39,8 @@ const products: IProduct[] = [
     description: 'Поке с тунцом - это гавайское блюдо из свежего тунца, риса, овощей и соусов.',
     link: '/products/poke-tuna',
     image: '/img/icons/products/icon-poke.svg',
+    price: 400,
+    weight: 200,
     structure: 'Тунец, рис, авокадо, огурцы, соусы',
     nutritional_value: 'Белки: 25г, Жиры: 10г, Углеводы: 35г',
     type: ProductType.Poke,
@@ -47,6 +51,8 @@ const products: IProduct[] = [
     description: 'Поке с курицей - это гавайское блюдо из куриного мяса, риса, овощей и соусов.',
     link: '/products/poke-chicken',
     image: '/img/icons/products/icon-poke.svg',
+    price: 420,
+    weight: 204,
     structure: 'Куриное мясо, рис, авокадо, огурцы, соусы',
     nutritional_value: 'Белки: 20г, Жиры: 8г, Углеводы: 30г',
     type: ProductType.Poke,
@@ -57,6 +63,8 @@ const products: IProduct[] = [
     description: 'Салат "Цезарь" - классический салат с куриным мясом, сухариками и соусом Цезарь.',
     link: '/products/caesar-salad',
     image: '/img/icons/products/icon-salad.svg',
+    price: 480,
+    weight: 29,
     structure: 'Куриное мясо, листовой салат, сухарики, соус Цезарь',
     nutritional_value: 'Белки: 15г, Жиры: 12г, Углеводы: 25г',
     type: ProductType.Salad,
@@ -67,6 +75,8 @@ const products: IProduct[] = [
     description: 'Салат "Греческий" - свежий салат с огурцами, помидорами, сыром фета и маслинами.',
     link: '/products/greek-salad',
     image: '/img/icons/products/icon-salad.svg',
+    price: 250,
+    weight: 2,
     structure: 'Огурцы, помидоры, сыр фета, маслины, оливковое масло',
     nutritional_value: 'Белки: 10г, Жиры: 15г, Углеводы: 20г',
     type: ProductType.Salad,
@@ -77,6 +87,8 @@ const products: IProduct[] = [
     description: 'Овсяная каша с фруктами - полезный завтрак из овсянки с свежими фруктами.',
     link: '/products/oatmeal-fruit',
     image: '/img/icons/products/icon-porridge.svg',
+    price: 643,
+    weight: 800,
     structure: 'Овсянка, молоко, фрукты',
     nutritional_value: 'Белки: 7г, Жиры: 3г, Углеводы: 40г',
     type: ProductType.Porridge,
@@ -87,6 +99,8 @@ const products: IProduct[] = [
     description: 'Молочный коктейль с бананом - напиток на молоке с добавлением свежего банана.',
     link: '/products/milkshake-banana',
     image: '/img/icons/products/icon-milkshake.svg',
+    price: 345,
+    weight: 100,
     structure: 'Молоко, банан, мед, ваниль',
     nutritional_value: 'Белки: 5г, Жиры: 3г, Углеводы: 30г',
     type: ProductType.Milkshake,
@@ -97,6 +111,8 @@ const products: IProduct[] = [
     description: 'Смузи "Зеленый" - напиток из свежих зеленых овощей и фруктов.',
     link: '/products/smoothie-green',
     image: '/img/icons/products/icon-smoothie.svg',
+    price: 430,
+    weight: 500,
     structure: 'Шпинат, банан, яблоко, апельсин',
     nutritional_value: 'Белки: 5г, Жиры: 2г, Углеводы: 25г',
     type: ProductType.Smoothie,
@@ -107,6 +123,8 @@ const products: IProduct[] = [
     description: 'Десертные вкусности - сладкие угощения из фруктов и ягод.',
     link: '/products/goodies-dessert',
     image: '/img/icons/products/icon-goodies.svg',
+    price: 342,
+    weight: 270,
     structure: 'Фрукты, ягоды, сироп, шоколад',
     nutritional_value: 'Белки: 2г, Жиры: 5г, Углеводы: 20г',
     type: ProductType.Goodies,
@@ -117,6 +135,8 @@ const products: IProduct[] = [
     description: 'Сэндвич с индейкой - перекус из тонкой лавашной основы с нежным мясом индейки.',
     link: '/products/sandwich-turkey',
     image: '/img/icons/products/icon-sandwich.svg',
+    price: 446,
+    weight: 210,
     structure: 'Лаваш, индейка, овощи, соус',
     nutritional_value: 'Белки: 15г, Жиры: 8г, Углеводы: 30г',
     type: ProductType.Poke,
@@ -127,6 +147,8 @@ const products: IProduct[] = [
     description: 'Мясной пирог - традиционное блюдо из слоеного теста с начинкой из мяса и лука.',
     link: '/products/meat-pie',
     image: '/img/icons/products/icon-sandwich.svg',
+    price: 444,
+    weight: 220,
     structure: 'Говядина, мука, вода',
     nutritional_value: 'Белки: 15г, Жиры: 8г, Углеводы: 30г',
     type: ProductType.Goodies,
