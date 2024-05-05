@@ -12,8 +12,8 @@ import { ActivatedRoute, Router } from '@angular/router';
       <h2 class="mb">{{ product.title }}</h2>
       <br/>
       <img [src]="product.image" [alt]="product.title" />
-      <p>{{ product.text }}</p>
-      <p>{{ product.time }}</p>
+      <p>{{ product.price }}</p>
+      <p>{{ product.weight }}</p>
       <a [href]="product.link" target="_blank">Посмотреть курс</a>
     </div>
   

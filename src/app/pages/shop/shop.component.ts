@@ -1,70 +1,52 @@
 import { Component, inject } from '@angular/core';
 import { TelegramService } from '../../services/telegram.service';
-import { ProductsSevice } from '../../services/products.service';
+import { ProductsSevice, IProduct } from '../../services/products.service';
 import { ProductListComponent } from '../../components/product-list/product-list.component';
+import { CommonModule } from '@angular/common';
+
+
+
 
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [ProductListComponent],
+  imports: [ProductListComponent,CommonModule],
   template: `
-    <html lag="en">
-    <head>
-      <meta charset="UTF-8">
-      <link rel="stylesheet" href="D:\Code_projects\Vscode\TG_shop\angular_tg_shop\src\styles.css">
-      
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-      <title>Товар</title>
-    </head>
-    
-    <body>
-
+    <ng-container *ngFor="let productChunk of chunk(productsService.products, 2)">
       <div class="wrapper">
-        <div class="card">
+        <div class="card" *ngFor="let product of productChunk">
           <div class="img_div">
-            <img class="card-img" src="assets/image/yt_profil1.png" >
+            <img class="card-img" src="assets/image/yt_profil1.png">
           </div>
-         
-          <div class="card-title">Поке с курочкой (рис) <br> Средний</div>
-
+          <div class="card-title">{{ product.title }}<br>{{ product.size }}</div>
           <div class="btn-keeper">
-            <a class="btn" href="#">Заказать</a>
+            <a class="btn" [href]="product.link">Заказать</a>
           </div>
-
-          <div class="price">459 ₽</div> 
-          <div class="weight">340 г</div>
-
-        </div>
-        <div class="card">
-          <div class="img_div">
-            <img class="card-img" src="assets/image/yt_profil1.png" >
-          </div>
-          <div class="card-title">Поке с курочкой (рис) и гречка<br> Средний</div>
-
-          <div class="btn-keeper">
-            <a class="btn" href="#">Заказать</a>
-          </div>
-
-          <div class="price">459 ₽</div> 
-          <div class="weight">340 г</div>
-
+          <div class="price">{{ product.price }} ₽</div> 
+          <div class="weight">{{ product.weight }} г</div>
         </div>
       </div>
+    </ng-container>
 
 
-    </body>
-   
-    </html>
-    
   `,
 })
 export class ShopComponent {
   telegram = inject(TelegramService);
   products = inject(ProductsSevice);
 
-  constructor() {
+
+  constructor(public productsService: ProductsSevice) {
     this.telegram.BackButton.hide();
   }
+
+  chunk(arr, size) {
+    let result = [];
+    for (let i = 0; i < arr.length; i += size) {
+      result.push(arr.slice(i, i + size));
+    }
+    return result;
+  }
+  
+  
 }

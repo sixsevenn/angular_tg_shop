@@ -32,13 +32,13 @@ export interface IProduct {
   type: ProductType;
 }
 
-// function addDamainToLinkAndImage(product: IProduct) {
-//   return {
-//     ...product,
-//     image: domain + product.image,
-//     link: domain + product.link,
-//   };
-// }
+function addDamainToLinkAndImage(product: IProduct) {
+  return {
+    ...product,
+    image: domain + product.image,
+    link: domain + product.link,
+  };
+}
 
 const products: IProduct[] = [
   {
