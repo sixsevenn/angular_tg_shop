@@ -26,7 +26,7 @@ import { ProductListComponent } from '../../components/product-list/product-list
       <div class="wrapper">
         <div class="card">
           <div class="img_div">
-          <img class="card-img" src="assets/image/boul-s-kur.jpeg" >
+            <img class="card-img" src="assets/image/yt_profil1.png" >
           </div>
          
           <div class="card-title">Поке с курочкой (рис) <br> Средний</div>
@@ -41,9 +41,9 @@ import { ProductListComponent } from '../../components/product-list/product-list
         </div>
         <div class="card">
           <div class="img_div">
-            <img class="card-img" src="assets/image/boul-s-kur.jpeg" >
+            <img class="card-img" src="assets/image/yt_profil1.png" >
           </div>
-          <div class="card-title">Поке с курочкой (рис) <br> Средний</div>
+          <div class="card-title">Поке с курочкой (рис) и гречка<br> Средний</div>
 
           <div class="btn-keeper">
             <a class="btn" href="#">Заказать</a>
