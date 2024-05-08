@@ -15,18 +15,16 @@ import { RouterLink } from '@angular/router';
   template: `
     <ng-container *ngFor="let productChunk of chunk(productsService.products, 2)">
       <div class="wrapper">
-        <div class="card" *ngFor="let product of productChunk">
-          <li class="product-item" [routerLink]="'/product/' + product.id">
-            <div class="img_div">
-              <img class="card-img" src="assets/image/yt_profil1.png">
-            </div>
-            <div class="card-title">{{ product.title }}<br>{{ product.size }}</div>
-            <div class="btn-keeper">
-              <a class="btn" [href]="product.link">Заказать</a>
-            </div>
-            <div class="price">{{ product.price }} ₽</div> 
-            <div class="weight">{{ product.weight }} г</div>
-          </li>
+        <div class="card" [routerLink]="'/product/' + product.id" *ngFor="let product of productChunk">
+          <div class="img_div">
+            <img class="card-img" src="assets/image/yt_profil1.png">
+          </div>
+          <div class="card-title">{{ product.title }}<br>{{ product.size }}</div>
+          <div class="btn-keeper">
+            <a class="btn" [href]="product.link">Заказать</a>
+          </div>
+          <div class="price">{{ product.price }} ₽</div> 
+          <div class="weight">{{ product.weight }} г</div>
         </div>
       </div>
     </ng-container>
