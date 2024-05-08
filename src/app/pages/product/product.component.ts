@@ -11,10 +11,11 @@ import { ActivatedRoute, Router } from '@angular/router';
     <div class="centered">
       <h2 class="mb">{{ product.title }}</h2>
       <br/>
-      <img [src]="product.image" [alt]="product.title" />
-      <p>{{ product.price }}</p>
-      <p>{{ product.weight }}</p>
-      <a [href]="product.link" target="_blank">Посмотреть курс</a>
+      <img class="product-img" src="assets/image/yt_profil1.png" [alt]="product.title" />
+
+      <p>{{ product.description }}</p>
+      <p class="title-nut-val">Пищевая ценность</p>
+      <p>{{ product.nutritional_value }}</p>
     </div>
   
   `,
@@ -26,7 +27,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     private products: ProductsSevice, 
     private telegram: TelegramService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router 
   ) {
     const id = this.route.snapshot.paramMap.get('id');
     this.product = this.products.getById(id);

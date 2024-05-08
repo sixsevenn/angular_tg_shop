@@ -16,7 +16,7 @@ import { TelegramService } from '../../services/telegram.service';
     <textarea 
       [value]="feedback()" 
       (input)="handleChange($event)" 
-      class="form-cintrol"
+      class="form-control"
       ></textarea>
   </form>
   `,

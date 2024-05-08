@@ -8,7 +8,8 @@ body {
     font-style: normal;
     /* background: var(--tg-theme-bg-color);
     color: var(--tg-theme-text-color); */
-    background: linear-gradient(to bottom, #9EDE88, #4D7968);
+    /* background: linear-gradient(to bottom, #9EDE88, #4D7968); */
+    background: #4D7968;
 }
 
 .wrapper {
@@ -91,6 +92,31 @@ body {
     margin-left: 8%;
     margin-top: -3%;
 }
+
+
+
+/* product.component.ts */
+
+.centered{
+    height: 100%;
+
+}
+
+.mb {
+    width: 50%; /* Ширина элемента */
+    margin: 0 auto; /* Автоматическое выравнивание по центру */
+    text-align: center; /* Центрирование текста */
+}
+
+.product-img {
+    width: 100%;
+    border-radius: 10vw;
+}
+
+.title-nut-val {
+    font-size: 5vw;
+}
+
 
 /* @media (max-width: 768px) {
 

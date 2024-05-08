@@ -41,6 +41,11 @@ export class ShopComponent {
     this.telegram.BackButton.hide();
   }
 
+  ngOnInit(): void {
+    this.telegram.MainButton.setText('Посмотреть заказ');
+    this.telegram.MainButton.show();
+  }
+
   chunk(arr, size) {
     let result = [];
     for (let i = 0; i < arr.length; i += size) {
