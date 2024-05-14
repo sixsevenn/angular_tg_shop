@@ -1,5 +1,5 @@
 const sequelize = require('../db')
-const {DataTypes, INTEGER} = require('sequelize')
+const {DataTypes} = require('sequelize')
 
 const User = sequelize.define('user', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
@@ -7,19 +7,19 @@ const User = sequelize.define('user', {
     role: {type: DataTypes.STRING, defaultValue: "USER"},
 })
 
-const Basket = sequelize.define ('basket', {
+const Basket = sequelize.define('basket', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 
 })
 
-const BasketProduct = sequelize.define ('basket_product', {
+const BasketProduct = sequelize.define('basket_product', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     
 })
 
-const Product = sequelize.define ('product', {
+const Product = sequelize.define('product', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING, allowNull: false},
+    name: {type: DataTypes.STRING, unique: true, allowNull: false},
     description: {type: DataTypes.STRING, allowNull: false},
     price: {type: DataTypes.INTEGER, allowNull: false},
     weight: {type: DataTypes.INTEGER, allowNull: false}, 
@@ -33,14 +33,6 @@ const Type = sequelize.define('type', {
     name: {type: DataTypes.STRING, unique: true,allowNull: false},
 })
 
-const Size = sequelize.define('size', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING, unique: true,allowNull: false},
-})
-
-const TypeSize = sequelize.define('type_size', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-})
 
 User.hasOne(Basket)
 Basket.belongsTo(User)
@@ -51,14 +43,9 @@ BasketProduct.belongsTo(Basket)
 Type.hasMany(Product)
 Product.belongsTo(Type)
 
-Size.hasMany(Product)
-Product.belongsTo(Size)
-
 Product.hasMany(BasketProduct)
 BasketProduct.belongsTo(Product)
 
-Type.belongsToMany(Size, {through: TypeSize})
-Size.belongsToMany(Type, {through: TypeSize})
 
 module.exports = {
     User, 
@@ -66,9 +53,5 @@ module.exports = {
     BasketProduct,
     Product,
     Type,
-    Size,
-    TypeSize,
 }
-
-
 

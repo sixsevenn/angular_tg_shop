@@ -34,7 +34,9 @@ import { RouterLink } from '@angular/router';
 })
 export class ShopComponent {
   telegram = inject(TelegramService);
-  products = inject(ProductsSevice);
+  // products = inject(ProductsSevice);
+  
+
 
 
   constructor(public productsService: ProductsSevice) {
