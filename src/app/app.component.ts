@@ -10,8 +10,8 @@ import { TelegramService } from './services/telegram.service';
   template: `<router-outlet />`,
 })
 export class AppComponent {
-  telegram = inject(TelegramService);
-  constructor() {
-    this.telegram.ready();
-  }
+  // telegram = inject(TelegramService);
+  // constructor() {
+  //   this.telegram.ready();
+  // }
 }

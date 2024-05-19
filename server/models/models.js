@@ -20,11 +20,10 @@ const BasketProduct = sequelize.define('basket_product', {
 const Product = sequelize.define('product', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
-    description: {type: DataTypes.STRING, allowNull: false},
+    description: {type: DataTypes.TEXT, allowNull: false},
     price: {type: DataTypes.INTEGER, allowNull: false},
     weight: {type: DataTypes.INTEGER, allowNull: false}, 
     img: {type: DataTypes.STRING, allowNull: false},
-    structure: {type: DataTypes.STRING, allowNull: false},
     nutritional_value: {type: DataTypes.STRING, allowNull: false},
 })
  
@@ -54,4 +53,7 @@ module.exports = {
     Product,
     Type,
 }
-
+// при изменениях запустить 
+// sequelize.sync({ alter: true }).then(() => {  
+//     console.log("Все таблицы были успешно обновлены");
+// });
