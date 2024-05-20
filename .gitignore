@@ -43,4 +43,4 @@ Thumbs.db
 
 
 # внутреннее окружение 
-\server\.env
+server/.env

@@ -108,6 +108,12 @@ body {
     text-align: center; /* Центрирование текста */
 }
 
+.form-control {
+    width: 100%; /* Ширина текстового поля занимает всю ширину формы */
+    padding: 10px;
+    box-sizing: border-box; /* Учитывает padding в ширине и высоте */
+}
+
 .product-img {
     width: 100%;
     border-radius: 10vw;

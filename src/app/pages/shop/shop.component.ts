@@ -21,7 +21,7 @@ import { RouterLink } from '@angular/router';
           </div>
           <div class="card-title">{{ product.title }}<br>{{ product.size }}</div>
           <div class="btn-keeper">
-            <a class="btn" [href]="product.link">Заказать</a>
+            <a class="btn" href="https://t.me/sixxseven">Заказать</a>
           </div>
           <div class="price">{{ product.price }} ₽</div> 
           <div class="weight">{{ product.weight }} г</div>
