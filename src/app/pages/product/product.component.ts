@@ -34,8 +34,10 @@ export class ProductComponent implements OnInit, OnDestroy {
     this.goBack = this.goBack.bind(this);
   }
 
-  goBack() {
-    this.router.navigate(['/']);
+  goBack(): void {
+    this.router.navigate(['/']).then(() => {
+      window.location.reload();
+    });
   }
 
   ngOnInit(): void {
