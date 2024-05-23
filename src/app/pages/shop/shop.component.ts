@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TelegramService } from '../../services/telegram.service';
-import { ProductsSevice, IProduct } from '../../services/products.service';
+import { ProductService, IProduct } from '../../services/products.service';
 import { ProductListComponent } from '../../components/product-list/product-list.component';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -13,37 +13,37 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [ProductListComponent,CommonModule, RouterLink],
   template: `
-    <ng-container *ngFor="let productChunk of chunk(productsService.products, 2)">
+    
+    <ng-container *ngFor="let productChunk of chunk(products, 2)">
       <div class="wrapper">
         <div class="card" [routerLink]="'/product/' + product.id" *ngFor="let product of productChunk">
           <div class="img_div">
-            <img class="card-img" src="assets/image/yt_profil1.png">
+            <img class="card-img" [src]="'http://localhost:5000/' + product.img">
           </div>
-          <div class="card-title">{{ product.title }}<br>{{ product.size }}</div>
+          <div class="card-title">{{ product.name }}</div>
           <div class="btn-keeper">
             <a class="btn" href="https://t.me/sixxseven">Заказать</a>
           </div>
-          <div class="price">{{ product.price }} ₽</div> 
+          <div class="price">{{ product.price }} ₽</div>
           <div class="weight">{{ product.weight }} г</div>
         </div>
       </div>
     </ng-container>
-
-
   `,
 })
-export class ShopComponent {
+export class ShopComponent implements OnInit {
   telegram = inject(TelegramService);
-  // products = inject(ProductsSevice);
-  
+  products: IProduct[] = [];
 
-
-
-  constructor(public productsService: ProductsSevice) {
+  constructor(public productService: ProductService) {
     this.telegram.BackButton.hide();
   }
 
   ngOnInit(): void {
+    this.productService.getProducts().subscribe((products) => {
+      this.products = products;
+    });
+
     this.telegram.MainButton.setText('Посмотреть заказ');
     this.telegram.MainButton.show();
   }
@@ -55,6 +55,4 @@ export class ShopComponent {
     }
     return result;
   }
-  
-  
 }
