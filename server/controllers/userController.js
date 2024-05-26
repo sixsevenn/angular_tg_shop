@@ -11,42 +11,34 @@ const generateJwt = (id, email, role) => {
     )
 }
 
-class UserContoller {
-    async registration(req,res) {
-        const {email, password, role} = req.body
-        if (!email || !password) {
-            return next(ApiError.badRequest('Некорректный email или password'))
-        }
-        const candidate = await User.findOne({where: {email}})
-        if (candidate) {
-            return next(ApiError.badRequest('Пользователь с таким email уже существует'))
-        }
-        const hashPassword = await bcrypt.hash(password, 5)
-        const user = await User.create({email, role, password:hashPassword})
-        const basket = await Basket.create({userId: user.id})
-        const token = generateJwt (user.id, user.email, user.role)
-        return res.json({token})
-    }
+class UserController {
+    async checkOrCreateUser(req, res, next) {
+        try {
+            const { tg_user_id, username, first_name, last_name, language_code } = req.body;
 
-    async login (req, res, next) {
-        const {email, password} = req.body
-        const user = await User.findOne({where: {email}})
-        if (!user) {
-            return next(ApiError.internal('Пользователь не найден'))
-        }
-        let comparePassword = bcrypt.compareSync(password, user.password)  // сравниваем пароль, который указал пользователь с паролем из бд
-        if (!comparePassword) {
-            return next(ApiError.internal('Указан неверный пароль'))
-           
-        }
-        const token = generateJwt(user.id, user.email, user.role)
-        return res.json({token})
-    }
+            if (!tg_user_id) {
+                return res.status(400).json({ message: "Не передан Telegram ID пользователя" });
+            }
 
-    async check(req, res, next) {
-        const token = generateJwt(req.user.id, req.user.email, req.user.role)
-        return res.json({token})
+            let user = await User.findOne({ where: { tg_user_id } });
+
+            if (!user) {
+                user = await User.create({
+                    tg_user_id,
+                    username,
+                    first_name,
+                    last_name,
+                    language: language_code
+                });
+            }
+
+            const token = generateJwt(user.id, user.tg_user_id, user.role);
+
+            return res.json({ message: "Пользователь проверен или добавлен", user, token });
+        } catch (e) {
+            next(ApiError.badRequest(e.message));
+        }
     }
 }
 
-module.exports = new UserContoller()
+module.exports = new UserController();

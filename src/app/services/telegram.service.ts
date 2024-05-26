@@ -36,6 +36,19 @@ export class TelegramService {
     this.tg.sendData(JSON.stringify(data));
   }
 
+  getData() {
+    return this.parseInitData(this.tg.initData);
+  }
+
+  parseInitData(initData: string) {
+    const params = new URLSearchParams(initData);
+    const user = params.get('user');
+    if (user) {
+      return JSON.parse(user);
+    }
+    return null;
+  }
+
   ready() {
     this.tg.ready();
   }

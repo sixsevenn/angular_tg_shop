@@ -13,8 +13,14 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [ProductListComponent,CommonModule, RouterLink],
   template: `
-    
-    <ng-container *ngFor="let productChunk of chunk(products, 2)">
+      <div>
+        <p>User ID: {{ userData.id }}</p>
+        <p>First Name: {{ userData.first_name }}</p>
+        <p>Last Name: {{ userData.last_name }}</p>
+        <p>Username: {{ userData.username }}</p>
+        <p>Language: {{ userData.language_code }}</p>
+      </div>
+    <!-- <ng-container *ngFor="let productChunk of chunk(products, 2)">
       <div class="wrapper">
         <div class="card" [routerLink]="'/product/' + product.id" *ngFor="let product of productChunk">
           <div class="img_div">
@@ -28,12 +34,13 @@ import { RouterLink } from '@angular/router';
           <div class="weight">{{ product.weight }} г</div>
         </div>
       </div>
-    </ng-container>
+    </ng-container> -->
   `,
 })
 export class ShopComponent implements OnInit {
   telegram = inject(TelegramService);
   products: IProduct[] = [];
+  userData: any;
 
   constructor(public productService: ProductService) {
     this.telegram.BackButton.hide();
@@ -46,6 +53,8 @@ export class ShopComponent implements OnInit {
 
     this.telegram.MainButton.setText('Посмотреть заказ');
     this.telegram.MainButton.show();
+
+    this.userData = this.telegram.getData();
   }
 
   chunk(arr, size) {

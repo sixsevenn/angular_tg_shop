@@ -2,6 +2,8 @@
 запустить локально сайт: ng serve
 собрать приложение: ng build
 задиплоить собранное приложение: firebase deploy
+или в одну строку: ng build && firebase deploy
+
 
 запустить бота: npm start
 
