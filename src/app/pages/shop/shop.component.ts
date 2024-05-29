@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TelegramService } from '../../services/telegram.service';
 import { ProductService, IProduct } from '../../services/products.service';
-import { UsersService } from '../../services/users.service'; 
+import { UsersService } from '../../services/users.service';
 import { ProductListComponent } from '../../components/product-list/product-list.component';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -12,9 +12,53 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [ProductListComponent,CommonModule, RouterLink],
+  imports: [ProductListComponent, CommonModule, RouterLink],
   template: `
-    
+
+    <!-- <header>
+      <nav id="navbar" class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Daily Wholsome Express</a>
+          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                  <li class="nav-item">
+                      <a class="nav-link" aria-current="page" href="index.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#porridge">Каши</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#poke">Поке</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#drinks">Напитки</a>
+                  </li>
+
+                  <li class="nav-item ms-auto">
+                    <a class="nav-link" href="#cart" id="cart-link">
+                      <img src="assets/images/basket-2.png" alt="Cart" id="cart-icon">
+                    </a>
+                  </li>
+              </ul>
+
+
+            </div>
+          </div>
+
+      </nav>
+    </header> -->
+
+
+
+    <section>
+    </section>
+
+    <footer></footer>
+
+
+
+
+<!--     
     <ng-container *ngFor="let productChunk of chunk(products, 2)">
       <div class="wrapper">
         <div class="card" [routerLink]="'/product/' + product.id" *ngFor="let product of productChunk">
@@ -29,7 +73,7 @@ import { RouterLink } from '@angular/router';
           <div class="weight">{{ product.weight }} г</div>
         </div>
       </div>
-    </ng-container>
+    </ng-container> -->
   `,
 })
 export class ShopComponent implements OnInit {

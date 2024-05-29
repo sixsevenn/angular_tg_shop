@@ -131,3 +131,90 @@ body {
     }
     
 } */
+
+
+/* navbar */
+
+.navbar {
+    /* background-color: #ffffff; */
+    background-color: var(--tg-theme-header-bg-color);
+    width: 100%;
+    padding: 0.2rem;
+    margin-top:-20px;
+    margin-left:-8px;
+    margin-right:-8px;
+    position: fixed;
+
+
+
+}
+
+.navbar .container-fluid {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;  /* раздвигает элементы межу друг другом */
+}
+
+.navbar-brand{
+    font-size: 3vw;
+}
+
+.navbar-nav {
+    display: flex; /* Разместить элементы списка в строку */
+    width: 100%;
+}
+
+
+.navbar-brand {
+    /* color: #000; */
+    color: var(--tg-theme-text-color);
+    font-weight: bold; 
+    text-decoration: none; /* Убрать подчеркивание */
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-size: 2vw;
+    
+
+}
+
+.navbar li {
+    float: left;
+}
+
+.navbar li a {
+    display: block;
+    color:#484848;
+
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+.navbar li a:hover {
+    color: #000000;
+}
+
+
+.ms-auto {
+    margin-left: auto; /* Push the cart link to the rightmost side */
+}
+
+#cart-link {
+    display: flex;
+    align-items: center; /* Центрирование иконки по вертикали */
+}
+
+#cart-icon {
+    width: 4vw; /* Ширина картинки */
+    height: 4vw; /* Высота картинки */
+    vertical-align: middle; /* Центрирование по вертикали */
+    background-color: red;
+    border-radius: 7vw;
+}
