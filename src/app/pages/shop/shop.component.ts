@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TelegramService } from '../../services/telegram.service';
 import { ProductService, IProduct } from '../../services/products.service';
+import { UsersService } from '../../services/users.service'; 
 import { ProductListComponent } from '../../components/product-list/product-list.component';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -34,8 +35,9 @@ import { RouterLink } from '@angular/router';
 export class ShopComponent implements OnInit {
   telegram = inject(TelegramService);
   products: IProduct[] = [];
+  userData: any;
 
-  constructor(public productService: ProductService) {
+  constructor(public productService: ProductService, private usersService: UsersService) {
     this.telegram.BackButton.hide();
   }
 
@@ -46,7 +48,15 @@ export class ShopComponent implements OnInit {
 
     this.telegram.MainButton.setText('Посмотреть заказ');
     this.telegram.MainButton.show();
+
+    this.userData = this.telegram.getData();
+
+    if (this.userData) {
+      this.authenticateUser(this.userData.id, this.userData.first_name, this.userData.last_name, this.userData.username, this.userData.language_code);
+    }
   }
+
+
 
   chunk(arr, size) {
     let result = [];
@@ -55,4 +65,27 @@ export class ShopComponent implements OnInit {
     }
     return result;
   }
+
+
+  authenticateUser(id: string, first_name: string, last_name: string, username: string, language_code: string) {
+    const userData = {
+      tg_user_id: id,
+      first_name: first_name,
+      last_name: last_name,
+      username: username,
+      language: language_code
+    };
+
+    this.usersService.authentication(userData).subscribe(
+      response => {
+        console.log('User authenticated successfully', response);
+      },
+      error => {
+        console.error('Authentication failed', error);
+      }
+    );
+  }
+
+
+
 }
