@@ -218,3 +218,20 @@ body {
     background-color: red;
     border-radius: 7vw;
 }
+
+.btn- {
+    background: linear-gradient(to top, #C81C2A , #ff747b);
+    padding: 15% 50%;
+
+    border-radius: 2.7vw;
+    text-decoration: none;
+    
+    color: black;
+    transition: background 0.5s linear;
+    font-size: 2.5vw;
+    display: none;
+}
+.count_products {
+    display: none;
+}
+

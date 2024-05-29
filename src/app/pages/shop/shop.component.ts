@@ -15,51 +15,27 @@ import { RouterLink } from '@angular/router';
   imports: [ProductListComponent, CommonModule, RouterLink],
   template: `
 
-    <!-- <header>
-      <nav id="navbar" class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Daily Wholsome Express</a>
-          <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav">
-                  <li class="nav-item">
-                      <a class="nav-link" aria-current="page" href="index.html">Home</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="#porridge">Каши</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="#poke">Поке</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="#drinks">Напитки</a>
-                  </li>
-
-                  <li class="nav-item ms-auto">
-                    <a class="nav-link" href="#cart" id="cart-link">
-                      <img src="assets/images/basket-2.png" alt="Cart" id="cart-icon">
-                    </a>
-                  </li>
-              </ul>
-
-
-            </div>
-          </div>
-
-      </nav>
-    </header> -->
-
-
 
     <section>
     </section>
 
     <footer></footer>
+    <div class="btn-keeper">
+      <button class="btn" data-id="fjeifej" (click)="handleClick($event)">Заказать</button>
+    </div>
+    <button class="btn" data-id="3456345" (click)="handleClick($event)">Заказать</button>
 
+  
+    <div class="btn-keeper">
+      <a class="btn-" data-id="kgjsdf" (click)="handleClick_decrement($event)">-</a>
+      <p class="count_products">count</p>
+      <a class="btn" data-id="kgjsdf" (click)="handleClick($event)">+</a>
+    </div>
 
-
-
-<!--     
-    <ng-container *ngFor="let productChunk of chunk(products, 2)">
+    
+    
+    
+    <!-- <ng-container *ngFor="let productChunk of chunk(products, 2)">
       <div class="wrapper">
         <div class="card" [routerLink]="'/product/' + product.id" *ngFor="let product of productChunk">
           <div class="img_div">
@@ -128,6 +104,19 @@ export class ShopComponent implements OnInit {
         console.error('Authentication failed', error);
       }
     );
+  }
+
+
+  handleClick(event: Event): void {
+    const target = event.target as HTMLElement;
+    const dataId = target.getAttribute('data-id');
+    console.log(dataId);
+  }
+
+  handleClick_decrement(event: Event): void {
+    const target = event.target as HTMLElement;
+    const dataId = target.getAttribute('data-id');
+    console.log("удалить из карзины",dataId);
   }
 
 
