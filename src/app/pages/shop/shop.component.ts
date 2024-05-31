@@ -6,56 +6,47 @@ import { ProductListComponent } from '../../components/product-list/product-list
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
-
-
-
 @Component({
   selector: 'app-shop',
   standalone: true,
   imports: [ProductListComponent, CommonModule, RouterLink],
   template: `
-
-
-    <section>
-    </section>
-
-    <footer></footer>
-    <div class="btn-keeper">
-      <button class="btn" data-id="fjeifej" (click)="handleClick($event)">Заказать</button>
-    </div>
-    <button class="btn" data-id="3456345" (click)="handleClick($event)">Заказать</button>
-
-  
-    <div class="btn-keeper">
-      <a class="btn-" data-id="kgjsdf" (click)="handleClick_decrement($event)">-</a>
-      <p class="count_products">count</p>
-      <a class="btn" data-id="kgjsdf" (click)="handleClick($event)">+</a>
-    </div>
-
-    
-    
-    
-    <!-- <ng-container *ngFor="let productChunk of chunk(products, 2)">
+    <ng-container *ngFor="let productChunk of chunk(products, 2)">
       <div class="wrapper">
         <div class="card" [routerLink]="'/product/' + product.id" *ngFor="let product of productChunk">
           <div class="img_div">
             <img class="card-img" [src]="'http://localhost:5000/' + product.img">
           </div>
           <div class="card-title">{{ product.name }}</div>
+
+          <!-- кнопка и счетчик -->
           <div class="btn-keeper">
-            <a class="btn" href="https://t.me/sixxseven">Заказать</a>
+            <a class="btn" [attr.data-id]="product.id" *ngIf="!showQuantity[product.id]" (click)="handleClick($event)">
+              <img class="btn-icon" [id]="product.id" src="assets/images/plus-30.png">
+              <span class="btn-text" [id]="product.id">Добавить</span>
+            </a>
+            <a class="btn" *ngIf="showQuantity[product.id]">
+              <img class="btn-icon-minus" src="assets/images/minus-30.png" (click)="decrementQuantity(product.id)">
+              <div class="quantity-keeper">
+                <span class="btn-text">{{ quantities[product.id] }}</span>
+              </div>
+              <img class="btn-icon-plus" src="assets/images/plus-30.png" (click)="incrementQuantity(product.id)">
+            </a>
           </div>
+
           <div class="price">{{ product.price }} ₽</div>
           <div class="weight">{{ product.weight }} г</div>
         </div>
       </div>
-    </ng-container> -->
+    </ng-container>
   `,
 })
 export class ShopComponent implements OnInit {
   telegram = inject(TelegramService);
   products: IProduct[] = [];
   userData: any;
+  quantities: { [productId: string]: number } = {};
+  showQuantity: { [productId: string]: boolean } = {};
 
   constructor(public productService: ProductService, private usersService: UsersService) {
     this.telegram.BackButton.hide();
@@ -64,6 +55,7 @@ export class ShopComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getProducts().subscribe((products) => {
       this.products = products;
+      this.initializeQuantities(products);
     });
 
     this.telegram.MainButton.setText('Посмотреть заказ');
@@ -76,7 +68,12 @@ export class ShopComponent implements OnInit {
     }
   }
 
-
+  initializeQuantities(products: IProduct[]): void {
+    products.forEach(product => {
+      this.quantities[product.id] = 0;
+      this.showQuantity[product.id] = false;
+    });
+  }
 
   chunk(arr, size) {
     let result = [];
@@ -85,7 +82,6 @@ export class ShopComponent implements OnInit {
     }
     return result;
   }
-
 
   authenticateUser(id: string, first_name: string, last_name: string, username: string, language_code: string) {
     const userData = {
@@ -106,19 +102,30 @@ export class ShopComponent implements OnInit {
     );
   }
 
-
   handleClick(event: Event): void {
     const target = event.target as HTMLElement;
-    const dataId = target.getAttribute('data-id');
-    console.log(dataId);
+    const dataId = target.getAttribute('data-id') || target.parentElement?.getAttribute('data-id');
+    if (dataId) {
+      console.log("добавить в корзину: ", dataId);
+
+      this.quantities[dataId]++;
+      this.showQuantity[dataId] = true;
+    }
   }
 
-  handleClick_decrement(event: Event): void {
-    const target = event.target as HTMLElement;
-    const dataId = target.getAttribute('data-id');
-    console.log("удалить из карзины",dataId);
+  incrementQuantity(productId: string): void {
+    this.quantities[productId]++;
+    console.log("Добавить в корзину: ", productId)
+
   }
 
-
-
+  decrementQuantity(productId: string): void {
+    if (this.quantities[productId] > 0) {
+      this.quantities[productId]--;
+      console.log("Удалить из корзины: ", productId)
+    }
+    if (this.quantities[productId] === 0) {
+      this.showQuantity[productId] = false;
+    }
+  }
 }
