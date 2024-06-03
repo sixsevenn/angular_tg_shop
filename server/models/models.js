@@ -13,12 +13,14 @@ const User = sequelize.define('user', {
 
 const Basket = sequelize.define('basket', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-
+    userId: { type: DataTypes.INTEGER, allowNull: false, references: { model: 'users', key: 'id' } },
 })
 
 const BasketProduct = sequelize.define('basket_product', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    
+    quantity: { type: DataTypes.INTEGER, defaultValue: 1, allowNull: false },
+    // basket_id: { type: DataTypes.INTEGER, allowNull: false, references: { model: 'baskets', key: 'id' } },
+    // product_id: { type: DataTypes.INTEGER, allowNull: false, references: { model: 'products', key: 'id' } },
 })
 
 const Product = sequelize.define('product', {
@@ -38,16 +40,16 @@ const Type = sequelize.define('type', {
 
 
 User.hasOne(Basket)
-Basket.belongsTo(User)
+Basket.belongsTo(User, { foreignKey: 'userId' })
 
-Basket.hasMany(BasketProduct)
-BasketProduct.belongsTo(Basket)
+Basket.hasMany(BasketProduct, { foreignKey: 'basket_id' })
+BasketProduct.belongsTo(Basket, { foreignKey: 'basket_id' })
 
 Type.hasMany(Product)
 Product.belongsTo(Type)
 
-Product.hasMany(BasketProduct)
-BasketProduct.belongsTo(Product)
+Product.hasMany(BasketProduct, { foreignKey: 'product_id' })
+BasketProduct.belongsTo(Product, { foreignKey: 'product_id' })
 
 
 module.exports = {
