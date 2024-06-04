@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { TelegramService } from '../../services/telegram.service';
 import { ProductService, IProduct } from '../../services/products.service';
 import { UsersService } from '../../services/users.service';
+import { BasketProductService } from '../../services/basketProduct.service';
 import { ProductListComponent } from '../../components/product-list/product-list.component';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -48,7 +49,11 @@ export class ShopComponent implements OnInit {
   quantities: { [productId: string]: number } = {};
   showQuantity: { [productId: string]: boolean } = {};
 
-  constructor(public productService: ProductService, private usersService: UsersService) {
+  constructor(
+    public productService: ProductService, 
+    private usersService: UsersService,
+    private BasketProductService: BasketProductService
+    ) {
     this.telegram.BackButton.hide();
   }
 
@@ -104,28 +109,80 @@ export class ShopComponent implements OnInit {
 
   handleClick(event: Event): void {
     const target = event.target as HTMLElement;
-    const dataId = target.getAttribute('data-id') || target.parentElement?.getAttribute('data-id');
-    if (dataId) {
-      console.log("добавить в корзину: ", dataId);
-
-      this.quantities[dataId]++;
-      this.showQuantity[dataId] = true;
+    const ProductId = target.getAttribute('data-id') || target.parentElement?.getAttribute('data-id');
+    if (ProductId) {
+      console.log("добавить в корзину: ", ProductId);
+      this.add_to_basket_test(ProductId);
+      
+      this.quantities[ProductId]++;
+      this.showQuantity[ProductId] = true;
     }
   }
 
   incrementQuantity(productId: string): void {
     this.quantities[productId]++;
     console.log("Добавить в корзину: ", productId)
-
+    this.add_to_basket_test(productId);
   }
 
   decrementQuantity(productId: string): void {
     if (this.quantities[productId] > 0) {
       this.quantities[productId]--;
       console.log("Удалить из корзины: ", productId)
+      this.delete_from_basket_test(productId);
     }
     if (this.quantities[productId] === 0) {
       this.showQuantity[productId] = false;
     }
   }
+
+
+
+  add_to_basket(productId: string): void {
+    if (this.userData && this.userData.id) {
+      this.BasketProductService.addToBasket(this.userData.id, productId).subscribe(
+        response => {
+          console.log('Product added to basket successfully', response);
+        },
+        error => {
+          console.error('Failed to add product to basket', error);
+        }
+      );
+    }
+  }
+
+  delete_from_basket(productId: string): void {
+    this.BasketProductService.removeFromBasket("1040154933", productId).subscribe(
+      response => {
+        console.log('Product deleted from basket successfully', response);
+      },
+      error => {
+        console.error('Failed to delete product from basket', error);
+      }
+    );
+  }
+
+  add_to_basket_test(productId: string): void {
+    this.BasketProductService.addToBasket("1040154933", productId).subscribe(
+      response => {
+        console.log('Product added to basket successfully', response);
+      },
+      error => {
+        console.error('Failed to add product to basket', error);
+      }
+    );
+  }
+
+  delete_from_basket_test(productId: string): void {
+    this.BasketProductService.removeFromBasket("1040154933", productId).subscribe(
+      response => {
+        console.log('Product deleted from basket successfully', response);
+      },
+      error => {
+        console.error('Failed to delete product from basket', error);
+      }
+    );
+  }
+  
+  
 }

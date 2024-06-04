@@ -4,7 +4,8 @@ const basketProductController = require('../controllers/basketProductController'
 
 
 router.post('/', basketProductController.addProduct)
-router.delete('/', basketProductController.removeProduct)
+router.post('/removeProduct', basketProductController.removeProduct)
+router.post('/removeAllProducts', basketProductController.removeAllProducts)
 router.get('/', basketProductController.getAll)
 
 module.exports = router
