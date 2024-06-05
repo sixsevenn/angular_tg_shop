@@ -70,7 +70,10 @@ export class ShopComponent implements OnInit {
 
     if (this.userData) {
       this.authenticateUser(this.userData.id, this.userData.first_name, this.userData.last_name, this.userData.username, this.userData.language_code);
+    } else{
+      console.log("Не произошла авторизация")
     }
+    
   }
 
   initializeQuantities(products: IProduct[]): void {
@@ -148,18 +151,24 @@ export class ShopComponent implements OnInit {
           console.error('Failed to add product to basket', error);
         }
       );
+    } else {
+      console.log("Отсутствует userData или userData.id")
     }
   }
 
   delete_from_basket(productId: string): void {
-    this.BasketProductService.removeFromBasket("1040154933", productId).subscribe(
-      response => {
-        console.log('Product deleted from basket successfully', response);
-      },
-      error => {
-        console.error('Failed to delete product from basket', error);
-      }
-    );
+    if (this.userData && this.userData.id) {
+      this.BasketProductService.removeFromBasket(this.userData.id, productId).subscribe(
+        response => {
+          console.log('Product deleted from basket successfully', response);
+        },
+        error => {
+          console.error('Failed to delete product from basket', error);
+        }
+      );
+    }else {
+      console.log("Отсутствует userData или userData.id")
+    }
   }
 
   add_to_basket_test(productId: string): void {
