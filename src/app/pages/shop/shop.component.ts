@@ -40,6 +40,14 @@ import { RouterLink } from '@angular/router';
         </div>
       </div>
     </ng-container>
+
+    <button class="order_view" (click)="Go_to_basket($event)">Посмотреть заказ</button>
+
+    <div class="basket" *ngIf="showBasket">
+      корзина
+    </div>
+    
+    
   `,
 })
 export class ShopComponent implements OnInit {
@@ -48,6 +56,7 @@ export class ShopComponent implements OnInit {
   userData: any;
   quantities: { [productId: string]: number } = {};
   showQuantity: { [productId: string]: boolean } = {};
+  showBasket = false;
 
   constructor(
     public productService: ProductService, 
@@ -191,6 +200,11 @@ export class ShopComponent implements OnInit {
         console.error('Failed to delete product from basket', error);
       }
     );
+  }
+  
+
+  Go_to_basket(event: Event): void {
+    this.showBasket = !this.showBasket;
   }
   
   
