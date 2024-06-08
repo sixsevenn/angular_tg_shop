@@ -161,10 +161,48 @@ class BasketProductController {
             return next(ApiError.internal('Ошибка при получении товаров из корзины'));
         }
     }
+
+
+    async getWithProducts(req, res, next) {
+        try {
+            const { tgUserId } = req.query;
+
+            if (!tgUserId) {
+                return next(ApiError.badRequest('tgUserId не предоставлен'));
+            }
+
+            const tgUserIdStr = tgUserId.toString();
+
+            // Найти пользователя
+            const user = await User.findOne({ where: {tg_user_id: tgUserIdStr } });
+            if (!user) {
+                return next(ApiError.badRequest('Пользователь не найден'));
+            }
+
+            // Найти корзину пользователя
+            const basket = await Basket.findOne({ where: { userId: user.id } });
+            if (!basket) {
+                return next(ApiError.badRequest('Корзина пользователя не найдена'));
+            }
+
+            // Все товары из корзины пользователя вместе с информацией о продукте
+            const products = await BasketProduct.findAll({
+                where: { basket_id: basket.id },
+                include: {
+                    model: Product,
+                    attributes: ['id', 'name', 'description', 'price', 'weight', 'img', 'nutritional_value'],
+                },
+            });
+
+            return res.json(products);
+        } catch (error) {
+            console.error('Ошибка при получении товаров из корзины:', error);
+            return next(ApiError.internal('Ошибка при получении товаров из корзины'));
+        }
+    }
+    
+    
 }
 
 
 module.exports = new BasketProductController();
-
-// добавить второй продукт в корзину другому пользователю, проверить функцию геталл для продуктов определенного пользователя, написать логики удаленя товаров из карзины(уменьшать сначала количество, а когда оно закончится, удалять сам товар),
-// прописать в сервисе запрос на сервер по добавлению, получению, и удалению товаров из корзины, придумать, как это будет отображаться на сайте. (например цена на главной кнопке)

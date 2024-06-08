@@ -44,15 +44,21 @@ import { RouterLink } from '@angular/router';
     <button class="order_view" (click)="Go_to_basket($event)">Посмотреть заказ</button>
 
     <div class="basket" *ngIf="showBasket">
-      корзина
+      <div *ngFor="let product of basket_products">
+        <div>PRODUCT ID: {{ product.product_id }}</div>
+        <div>Quantity: {{ product.quantity }}</div>
+        <div>Name: {{ product.product.name }}</div>
+        <hr>
+      </div>
     </div>
     
-    
+
   `,
 })
 export class ShopComponent implements OnInit {
   telegram = inject(TelegramService);
   products: IProduct[] = [];
+  basket_products: any;
   userData: any;
   quantities: { [productId: string]: number } = {};
   showQuantity: { [productId: string]: boolean } = {};
@@ -205,6 +211,11 @@ export class ShopComponent implements OnInit {
 
   Go_to_basket(event: Event): void {
     this.showBasket = !this.showBasket;
+
+    this.BasketProductService.getBasketProducts("1040154933").subscribe((basket_products) => {
+      this.basket_products = basket_products;
+    });
+
   }
   
   
