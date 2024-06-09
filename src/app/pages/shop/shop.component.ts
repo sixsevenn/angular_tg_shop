@@ -44,11 +44,21 @@ import { RouterLink } from '@angular/router';
     <button class="order_view" (click)="Go_to_basket($event)">Посмотреть заказ</button>
 
     <div class="basket" *ngIf="showBasket">
-      <div *ngFor="let product of basket_products">
-        <div>PRODUCT ID: {{ product.product_id }}</div>
-        <div>Quantity: {{ product.quantity }}</div>
-        <div>Name: {{ product.product.name }}</div>
-        <hr>
+      <div class="basket_card" *ngFor="let b_product of basket_products">
+        <div class="basket_img_div">
+          <img class="basket-card-img" [src]="'http://localhost:5000/' + b_product.product.img">
+        </div>
+        <div class="basket_info">
+          <div class="basket-product-name">{{ b_product.product.name }}</div>
+          <div class="basket-line-price-weight">
+            <div class="basket-product-price">{{ b_product.product.price }} ₽</div>
+            <div class="basket-product-weight">{{ b_product.product.weight }} г</div>
+          </div>
+        </div>
+        <div class="basket_quantity">
+          <span class="quantity-label">Кол-во: {{ b_product.quantity }}</span>
+          <button class="remove-button">Удалить</button>
+        </div>
       </div>
     </div>
     

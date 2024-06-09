@@ -283,16 +283,96 @@ body {
 }
 
 .basket {
-    position: fixed; /* фиксированное позиционирование для полного покрытия экрана */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
+    background-color: rgba(0, 0, 0, 0.5);
     color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    overflow-y: auto;
+
+  }
+
+.basket_img_div {
     display: block;
-    justify-content: center; /* Горизонтальное центрирование */
-    align-items: center; /* Вертикальное центрирование */
-    z-index: 1000; /* Убедитесь, что элемент находится над другим контентом */
-    
+    width: 20vw;
+    height: 20vw;
 }
+
+
+.basket_card {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    color: #000;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin: 1px;
+    border-radius: 5px;
+    width: 80%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.basket_img_div {
+    flex: 0 0 auto;
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+}
+
+.basket-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.basket_info {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.basket-product-name {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+.basket-line-price-weight {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.basket-product-price, .basket-product-weight {
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+
+.basket_quantity {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.quantity-label {
+    margin-bottom: 10px;
+}
+
+.remove-button {
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+ 
