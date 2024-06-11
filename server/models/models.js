@@ -32,7 +32,21 @@ const Product = sequelize.define('product', {
     img: {type: DataTypes.STRING, allowNull: false},
     nutritional_value: {type: DataTypes.STRING, allowNull: false},
 })
+
+// склад
+// продукт
+// количество на складе
+
+
+// заказ 
+// продукты и их колво
+// инфо о клиенте
  
+
+// доставка
+// связана с пользователем и с заказом
+// адресс
+
 const Type = sequelize.define('type', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true,allowNull: false},
