@@ -93,10 +93,30 @@ export class ShopComponent implements OnInit {
 
     this.userData = this.telegram.getData();
 
-    if (this.userData) {
-      this.authenticateUser(this.userData.id, this.userData.first_name, this.userData.last_name, this.userData.username, this.userData.language_code);
-    } else{
-      console.log("Не произошла авторизация")
+    const savedUserData = localStorage.getItem('userData');
+    if (savedUserData) {
+      this.userData = JSON.parse(savedUserData);
+      this.authenticateUser(
+        this.userData.id,
+        this.userData.first_name,
+        this.userData.last_name,
+        this.userData.username,
+        this.userData.language_code
+      );
+    } else {
+      this.userData = this.telegram.getData();
+      if (this.userData) {
+        localStorage.setItem('userData', JSON.stringify(this.userData));
+        this.authenticateUser(
+          this.userData.id,
+          this.userData.first_name,
+          this.userData.last_name,
+          this.userData.username,
+          this.userData.language_code
+        );
+      } else {
+        console.log("Не произошла авторизация");
+      }
     }
     
   }
@@ -140,7 +160,7 @@ export class ShopComponent implements OnInit {
     const ProductId = target.getAttribute('data-id') || target.parentElement?.getAttribute('data-id');
     if (ProductId) {
       console.log("добавить в корзину: ", ProductId);
-      this.add_to_basket_test(ProductId);
+      this.add_to_basket(ProductId);
       
       this.quantities[ProductId]++;
       this.showQuantity[ProductId] = true;
@@ -150,14 +170,14 @@ export class ShopComponent implements OnInit {
   incrementQuantity(productId: string): void {
     this.quantities[productId]++;
     console.log("Добавить в корзину: ", productId)
-    this.add_to_basket_test(productId);
+    this.add_to_basket(productId);
   }
 
   decrementQuantity(productId: string): void {
     if (this.quantities[productId] > 0) {
       this.quantities[productId]--;
       console.log("Удалить из корзины: ", productId)
-      this.delete_from_basket_test(productId);
+      this.delete_from_basket(productId);
     }
     if (this.quantities[productId] === 0) {
       this.showQuantity[productId] = false;
