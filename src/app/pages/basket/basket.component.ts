@@ -1,51 +1,77 @@
-// import { Component, OnDestroy, OnInit } from '@angular/core';
-// import { IProduct, ProductsSevice } from '../../services/products.service';
-// import { TelegramService } from '../../services/telegram.service';
-// import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, inject} from '@angular/core';
+import { BasketProductService } from '../../services/basketProduct.service';
+import { TelegramService } from '../../services/telegram.service';
+import { ShopComponent } from '../shop/shop.component';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
-// @Component({
-//   selector: 'app-product',
-//   standalone: true,
-//   imports: [],
-//   template: `
-//     <div class="centered">
-//       <h2 class="mb">{{ product.title }}</h2>
-//       <br/>
-//       <img class="product-img" src="assets/image/yt_profil1.png" [alt]="product.title" />
 
-//       <p>{{ product.description }}</p>
-//       <p class="title-nut-val">Пищевая ценность</p>
-//       <p>{{ product.nutritional_value }}</p>
-//     </div>
+@Component({
+  selector: 'app-basket',
+  standalone: true,
+  imports: [CommonModule, ShopComponent],
+  template: `
+    <div class="basket">
+        <div class="basket_card" *ngFor="let b_product of basket_products">
+        <div class="basket_img_div">
+            <img class="basket-card-img" [src]="'http://localhost:5000/' + b_product.product.img">
+        </div>
+        <div class="basket_info">
+            <div class="basket-product-name">{{ b_product.product.name }}</div>
+            <div class="basket-line-price-weight">
+            <div class="basket-product-price">{{ b_product.product.price }} ₽</div>
+            <div class="basket-product-weight">{{ b_product.product.weight }} г</div>
+            </div>
+        </div>
+        <div class="basket_quantity">
+            <span class="quantity-label">Кол-во: {{ b_product.quantity }}</span>
+            <button class="remove-button">Удалить</button>
+        </div>
+        </div>
+    </div>
+  `
+})
+export class BasketComponent implements OnInit {
+  basket_products: any[] = [];
+  userData: any;
+  telegram = inject(TelegramService);
+  route = inject(ActivatedRoute);
+  router = inject(Router);
+
+
+  constructor(private BasketProductService: BasketProductService) {
+    this.goBack = this.goBack.bind(this);
+  }
   
-//   `,
-// }) 
-// export class BasketComponent implements OnInit, OnDestroy {
-//   product: IProduct;
+  goBack(): void {
+    this.router.navigate(['/']).then(() => {
+      window.location.reload();
+    });
+  }
 
-//   constructor (
-//     private products: ProductsSevice, 
-//     private telegram: TelegramService,
-//     private route: ActivatedRoute,
-//     private router: Router 
-//   ) {
-//     const id = this.route.snapshot.paramMap.get('id');
-//     this.product = this.products.getById(id);
-//     this.goBack = this.goBack.bind(this);
-//   }
+  ngOnInit(): void {
+    const savedUserData = localStorage.getItem('userData');
+    if (savedUserData) {
+        this.userData = JSON.parse(savedUserData);
+        this.loadBasketProducts(this.userData.id);
+    } else {
+        console.log("UserData absent")
+    }
 
-//   goBack() {
-//     this.router.navigate(['/']);
-//   }
+    this.telegram.BackButton.show();
+    this.telegram.BackButton.onClick(this.goBack);
+  }
 
-//   ngOnInit(): void {
-//     this.telegram.BackButton.show();
-//     this.telegram.BackButton.onClick(this.goBack);
-//   }
+  loadBasketProducts(userId: string): void {
+    this.BasketProductService.getBasketProducts(userId).subscribe((basket_products) => {
+      this.basket_products = basket_products;
+    });
+  }
 
-//   ngOnDestroy(): void {
-//     this.telegram.BackButton.offClick(this.goBack);
-//   }
-  
+  ngOnDestroy(): void {
+    this.telegram.BackButton.offClick(this.goBack);
+  }
+}
 
-// }
+
+export default BasketComponent;
