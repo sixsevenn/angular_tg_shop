@@ -62,6 +62,7 @@ export class BasketComponent implements OnInit {
     } else {
         console.log("UserData absent")
         this.testUserDataId = "1040154933";
+        // перед деплоем поменять все testUserId на this.userData.id
         this.loadBasketProducts("1040154933");
 
     }
