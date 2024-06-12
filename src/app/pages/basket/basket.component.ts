@@ -29,8 +29,8 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
             <span class="btn-text">{{ b_product.quantity }}</span>
           </div>
           <img class="btn-icon-plus" src="assets/images/plus-30.png" (click)="incrementQuantity(b_product)">
-          <button class="remove-button" (click)="removeProduct(b_product.product.id, true)">Удалить</button>
-        </div>
+          </div>
+        <!-- <button class="remove-button" (click)="removeProduct(b_product.product.id, true)">Удалить</button> -->
       </div>
     </div>
   `

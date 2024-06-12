@@ -82,6 +82,7 @@ export class ShopComponent implements OnInit {
         this.userData.username,
         this.userData.language_code
       );
+      this.loadBasketProducts(this.userData.id);
     } else {
       this.userData = this.telegram.getData();
       if (this.userData) {
@@ -93,11 +94,11 @@ export class ShopComponent implements OnInit {
           this.userData.username,
           this.userData.language_code
         );
+        this.loadBasketProducts(this.userData.id);
       } else {
         console.log("Не произошла авторизация");
       }
-    }
-    
+    }    
   }
 
   initializeQuantities(products: IProduct[]): void {
@@ -145,6 +146,21 @@ export class ShopComponent implements OnInit {
       this.showQuantity[ProductId] = true;
     }
   }
+
+  loadBasketProducts(userId: string): void {
+    this.BasketProductService.getBasketProducts(userId).subscribe((basket_products) => {
+      this.basket_products = basket_products;
+      this.updateProductQuantities();
+    });
+  }
+
+  updateProductQuantities(): void {
+    this.basket_products.forEach(b_product => {
+      this.quantities[b_product.product.id] = b_product.quantity;
+      this.showQuantity[b_product.product.id] = true;
+    });
+  }
+
 
   incrementQuantity(productId: string): void {
     this.quantities[productId]++;
@@ -218,3 +234,5 @@ export class ShopComponent implements OnInit {
   }
   
 }
+
+export default ShopComponent;
