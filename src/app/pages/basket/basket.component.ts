@@ -38,7 +38,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 export class BasketComponent implements OnInit {
   basket_products: any[] = [];
   userData: any;
-  // testUserDataId: any;
+  testUserDataId: any;
   telegram = inject(TelegramService);
   route = inject(ActivatedRoute);
   router = inject(Router);
@@ -61,8 +61,8 @@ export class BasketComponent implements OnInit {
         this.loadBasketProducts(this.userData.id);
     } else {
         console.log("UserData absent")
-        // this.testUserDataId = "1040154933";
-        // this.loadBasketProducts("1040154933");
+        this.testUserDataId = "1040154933";
+        this.loadBasketProducts("1040154933");
 
     }
 
@@ -78,10 +78,8 @@ export class BasketComponent implements OnInit {
 
 
   incrementQuantity(b_product: any): void {
-    console.log('userDataId: ')
-    console.log('userDataId: ', this.userData.id)
     b_product.quantity++;
-    this.BasketProductService.addToBasket(this.userData.id, b_product.product.id, b_product.quantity).subscribe(
+    this.BasketProductService.addToBasket(this.testUserDataId, b_product.product.id).subscribe(
       () => {
         console.log('Product quantity increased successfully');
       },
@@ -94,7 +92,7 @@ export class BasketComponent implements OnInit {
   decrementQuantity(b_product: any): void {
     if (b_product.quantity > 1) {
       b_product.quantity--;
-      this.BasketProductService.removeFromBasket(this.userData.id, b_product.product.id, 1).subscribe(
+      this.BasketProductService.removeFromBasket(this.testUserDataId, b_product.product.id, 1).subscribe(
         () => {
           console.log('Product quantity decreased successfully');
         },
@@ -109,7 +107,7 @@ export class BasketComponent implements OnInit {
 
   removeProduct(productId: string, delete_all: boolean = false): void {
     this.basket_products = this.basket_products.filter(b_product => b_product.product.id !== productId);
-    this.BasketProductService.removeFromBasket(this.userData.id, productId, 1, delete_all).subscribe(
+    this.BasketProductService.removeFromBasket(this.testUserDataId, productId, 1, delete_all).subscribe(
       () => {
         console.log('Product removed successfully');
       },

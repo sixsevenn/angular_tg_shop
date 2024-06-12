@@ -139,7 +139,7 @@ export class ShopComponent implements OnInit {
     const ProductId = target.getAttribute('data-id') || target.parentElement?.getAttribute('data-id');
     if (ProductId) {
       console.log("добавить в корзину: ", ProductId);
-      this.add_to_basket(ProductId);
+      this.add_to_basket_test(ProductId);
       
       this.quantities[ProductId]++;
       this.showQuantity[ProductId] = true;
@@ -149,14 +149,14 @@ export class ShopComponent implements OnInit {
   incrementQuantity(productId: string): void {
     this.quantities[productId]++;
     console.log("Добавить в корзину: ", productId)
-    this.add_to_basket(productId);
+    this.add_to_basket_test(productId);
   }
 
   decrementQuantity(productId: string): void {
     if (this.quantities[productId] > 0) {
       this.quantities[productId]--;
       console.log("Удалить из корзины: ", productId)
-      this.delete_from_basket(productId);
+      this.delete_from_basket_test(productId);
     }
     if (this.quantities[productId] === 0) {
       this.showQuantity[productId] = false;
