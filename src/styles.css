@@ -309,7 +309,7 @@ body {
 .basket_card {
     display: flex;
     align-items: center;
-    background-color: #fff;
+    background: linear-gradient(to top, #B7DB39,#E9DC5E);
     color: #000;
     padding-left: 30px;
     padding-right: 30px;
