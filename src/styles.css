@@ -283,21 +283,36 @@ body {
 }
 
 .basket {
-    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
+    /* background-color: rgba(0, 0, 0, 0.3); */
     color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     z-index: 1000;
     overflow-y: auto;
+}
 
-  }
+.basket-title-keeper {
+    /* background-color: #fff; */
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.basket-title {
+    margin-left: 2vw;
+    font-size: 1.5em;
+}
+  
+.trash-bin-icon {
+    fill: rgb(221, 0, 0);
+    padding-top: 2vw;
+}
 
 .basket_img_div {
     display: block;
@@ -311,12 +326,14 @@ body {
     align-items: center;
     background: linear-gradient(to top, #B7DB39,#E9DC5E);
     color: #000;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 3vw;
+    padding-right: 3vw;
     margin: 1px;
     border-radius: 5px;
-    width: 80%;
+    width: 93%;
+    height: 25vw;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
 }
 
 .basket_img_div {
@@ -331,32 +348,47 @@ body {
     height: 100%;
     object-fit: cover;
     border-radius: 5px;
+    /* background-color: rebeccapurple; */
 }
 
 .basket_info {
-    flex: 1 1 auto;
+    padding-right: 2vw;
+
+    /* flex: 1 1 auto; */
     display: flex;
     flex-direction: column;
+    /* justify-content: space-between; */
+    width: 50%;
+    height: 60%;
+    /* background-color: #fff; */
 }
 
 .basket-product-name {
-    font-size: 1.2em;
-    margin-bottom: 5px;
+    font-size: 0.8em;
+    overflow: hidden;
+    white-space:unset;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Ограничение на две строки */
+    -webkit-box-orient: vertical;
 }
 
 .basket-line-price-weight {
-    display: flex;
-    justify-content: start;
+    /* background-color: #963609a2; */
+    display:flex;
+    margin-top: auto;
     align-items: center;
 }
 
 .basket-product-price, .basket-product-weight {
-    font-size: 1em;
-    margin-bottom: 5px;
+    font-size: 0.6em;
+    margin: 0.5vw;
 }
 
 .basket_quantity {
     background: linear-gradient(to top, #C81C2A , #ff747b);
+    /* background-color: #f44336; */
+
     display: flex;
     
     width: 30%; 

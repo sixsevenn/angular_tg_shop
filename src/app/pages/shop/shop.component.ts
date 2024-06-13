@@ -97,6 +97,7 @@ export class ShopComponent implements OnInit {
         this.loadBasketProducts(this.userData.id);
       } else {
         console.log("Не произошла авторизация");
+        this.loadBasketProducts("1040154933");
       }
     }    
   }
