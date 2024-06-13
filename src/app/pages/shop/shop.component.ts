@@ -3,6 +3,7 @@ import { TelegramService } from '../../services/telegram.service';
 import { ProductService, IProduct } from '../../services/products.service';
 import { UsersService } from '../../services/users.service';
 import { BasketProductService } from '../../services/basketProduct.service';
+import { BasketService } from '../../services/basket.service';
 import { ProductListComponent } from '../../components/product-list/product-list.component';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -22,7 +23,7 @@ import { RouterLink } from '@angular/router';
 
           <!-- кнопка и счетчик -->
           <div class="btn-keeper">
-            <a class="btn" [attr.data-id]="product.id" *ngIf="!showQuantity[product.id]" (click)="handleClick($event)">
+            <a class="btn" [attr.data-id]="product.id" [attr.data-price]="product.price" *ngIf="!showQuantity[product.id]" (click)="handleClick($event)">
               <img class="btn-icon" [id]="product.id" src="assets/images/plus-30.png">
               <span class="btn-text" [id]="product.id">Добавить</span>
             </a>
@@ -41,7 +42,7 @@ import { RouterLink } from '@angular/router';
       </div>
     </ng-container>
 
-    <button class="order_view" [routerLink]="'/basket'">Посмотреть заказ ({{ getTotalPrice() }} ₽)</button>
+    <!-- <button class="order_view" [routerLink]="'/basket'">Посмотреть заказ ({{ getTotalPrice() }} ₽)</button> -->
   `,
 })
 export class ShopComponent implements OnInit {
@@ -52,11 +53,14 @@ export class ShopComponent implements OnInit {
   quantities: { [productId: string]: number } = {};
   showQuantity: { [productId: string]: boolean } = {};
   showBasket = false;
+  textForMainButton: string;
+  totalPrice: number;
 
   constructor(
     public productService: ProductService, 
     private usersService: UsersService,
-    private BasketProductService: BasketProductService
+    private BasketProductService: BasketProductService,
+    private basketService: BasketService
     ) {
     this.telegram.BackButton.hide();
   }
@@ -67,8 +71,8 @@ export class ShopComponent implements OnInit {
       this.initializeQuantities(products);
     });
 
-    this.telegram.MainButton.setText('Посмотреть заказ');
-    this.telegram.MainButton.show();
+    this.telegram.MainButton.setText('hello')
+    this.telegram.MainButton.hide();
 
     this.userData = this.telegram.getData();
 
@@ -99,7 +103,8 @@ export class ShopComponent implements OnInit {
         console.log("Не произошла авторизация");
         this.loadBasketProducts("1040154933");
       }
-    }    
+    }  
+    this.updateMainButton()
   }
 
   initializeQuantities(products: IProduct[]): void {
@@ -141,7 +146,7 @@ export class ShopComponent implements OnInit {
     const ProductId = target.getAttribute('data-id') || target.parentElement?.getAttribute('data-id');
     if (ProductId) {
       console.log("добавить в корзину: ", ProductId);
-      this.add_to_basket_test(ProductId);
+      this.add_to_basket(ProductId);
       
       this.quantities[ProductId]++;
       this.showQuantity[ProductId] = true;
@@ -166,14 +171,14 @@ export class ShopComponent implements OnInit {
   incrementQuantity(productId: string): void {
     this.quantities[productId]++;
     console.log("Добавить в корзину: ", productId)
-    this.add_to_basket_test(productId);
+    this.add_to_basket(productId);
   }
 
   decrementQuantity(productId: string): void {
     if (this.quantities[productId] > 0) {
       this.quantities[productId]--;
       console.log("Удалить из корзины: ", productId)
-      this.delete_from_basket_test(productId);
+      this.delete_from_basket(productId);
     }
     if (this.quantities[productId] === 0) {
       this.showQuantity[productId] = false;
@@ -181,10 +186,23 @@ export class ShopComponent implements OnInit {
   }
 
 
-  getTotalPrice(): number {
-    return this.basket_products.reduce((total, b_product) => {
-      return total + b_product.product.price * b_product.quantity;
-    }, 0);
+  updateMainButton(): void {
+    this.basketService.getTotalPrice(this.userData.id).subscribe((response) => {
+          const totalPrice = response.totalPrice;
+          this.totalPrice = totalPrice;
+          this.textForMainButton = this.totalPrice.toString() + " ₽";
+          this.telegram.MainButton.setText(this.textForMainButton);
+
+          if (this.totalPrice > 0) {
+              this.telegram.MainButton.show();
+          } else {
+              this.telegram.MainButton.hide();
+          }
+        },
+      (error) => {
+          console.error('Ошибка при получении общей цены:', error);
+      }
+    );
   }
 
 
@@ -193,6 +211,7 @@ export class ShopComponent implements OnInit {
       this.BasketProductService.addToBasket(this.userData.id, productId).subscribe(
         response => {
           console.log('Product added to basket successfully', response);
+          this.updateMainButton();
         },
         error => {
           console.error('Failed to add product to basket', error);
@@ -208,6 +227,7 @@ export class ShopComponent implements OnInit {
       this.BasketProductService.removeFromBasket(this.userData.id, productId).subscribe(
         response => {
           console.log('Product deleted from basket successfully', response);
+          this.updateMainButton();
         },
         error => {
           console.error('Failed to delete product from basket', error);
