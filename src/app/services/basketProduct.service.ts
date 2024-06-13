@@ -20,6 +20,11 @@ export class BasketProductService {
     return this.http.post(`${this.apiUrl}/removeProduct`, body);
   }
 
+  removeAllFromBasket(tgUserId: string): Observable<any> {
+    const body = { tgUserId };
+    return this.http.post(`${this.apiUrl}/removeAllProducts`, body);
+  }
+
   getBasketProducts(id: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/with_products?tgUserId=${id}`);
   }

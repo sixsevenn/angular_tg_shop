@@ -41,7 +41,7 @@ import { RouterLink } from '@angular/router';
       </div>
     </ng-container>
 
-    <button class="order_view" [routerLink]="'/basket'">Посмотреть заказ</button>
+    <button class="order_view" [routerLink]="'/basket'">Посмотреть заказ ({{ getTotalPrice() }} ₽)</button>
   `,
 })
 export class ShopComponent implements OnInit {
@@ -180,6 +180,12 @@ export class ShopComponent implements OnInit {
     }
   }
 
+
+  getTotalPrice(): number {
+    return this.basket_products.reduce((total, b_product) => {
+      return total + b_product.product.price * b_product.quantity;
+    }, 0);
+  }
 
 
   add_to_basket(productId: string): void {
