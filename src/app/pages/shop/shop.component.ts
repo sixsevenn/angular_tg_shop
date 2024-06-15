@@ -6,7 +6,7 @@ import { BasketProductService } from '../../services/basketProduct.service';
 import { BasketService } from '../../services/basket.service';
 import { ProductListComponent } from '../../components/product-list/product-list.component';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 
 @Component({
   selector: 'app-shop',
@@ -42,7 +42,7 @@ import { RouterLink } from '@angular/router';
       </div>
     </ng-container>
 
-    <!-- <button class="order_view" [routerLink]="'/basket'">Посмотреть заказ ({{ getTotalPrice() }} ₽)</button> -->
+    <!-- <button class="order_view" [routerLink]="'/basket'">Посмотреть заказ </button> -->
   `,
 })
 export class ShopComponent implements OnInit {
@@ -55,6 +55,7 @@ export class ShopComponent implements OnInit {
   showBasket = false;
   textForMainButton: string;
   totalPrice: number;
+  router = inject(Router);
 
   constructor(
     public productService: ProductService, 
@@ -63,6 +64,13 @@ export class ShopComponent implements OnInit {
     private basketService: BasketService
     ) {
     this.telegram.BackButton.hide();
+    this.goBasket = this.goBasket.bind(this);
+  }
+
+  goBasket(): void {
+    this.router.navigate(['/basket']).then(() => {
+      window.location.reload();
+    });
   }
 
   ngOnInit(): void {
@@ -105,6 +113,8 @@ export class ShopComponent implements OnInit {
       }
     }  
     this.updateMainButton()
+
+    this.telegram.MainButton.onClick(this.goBasket);
   }
 
   initializeQuantities(products: IProduct[]): void {
