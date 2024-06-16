@@ -26,7 +26,6 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
           <div class="basket-product-name">{{ b_product.product.name }}</div>
           <div class="basket-line-price-weight">
             <div class="basket-product-price"> {{ b_product.product.price * b_product.quantity }} ₽ </div>
-            <!-- <div> / </div> -->
             <div class="basket-product-weight"> {{ b_product.product.weight }} г </div>
           </div>
         </div>
@@ -37,10 +36,33 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
           </div>
           <img class="btn-icon-plus" src="assets/images/plus-30.png" (click)="incrementQuantity(b_product)">
           </div>
-        <!-- <button class="remove-button" (click)="removeProduct(b_product.product.id, true)">Удалить</button> -->
+      </div>
+
+      <div class="basket-total">
+        <div class="basket-total-text">Всего: </div>
+        <div class="basket-total-price">{{ totalSum }} ₽</div>
       </div>
     </div>
-  `
+  `,
+  styles: [`
+    .basket-total {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-top: 1px solid #ccc;
+      margin-top: 10px;
+    }
+
+    .basket-total-text {
+      margin-right: 1vw;
+      font-weight: bold;
+    }
+
+    .basket-total-price {
+      font-weight: bold;
+      color: yellow;
+    }
+  `]
 })
 export class BasketComponent implements OnInit {
   basket_products: any[] = [];
@@ -49,6 +71,7 @@ export class BasketComponent implements OnInit {
   telegram = inject(TelegramService);
   route = inject(ActivatedRoute);
   router = inject(Router);
+  totalSum: number = 0;
 
   constructor(private BasketProductService: BasketProductService) {
     this.goBack = this.goBack.bind(this);
@@ -83,6 +106,7 @@ export class BasketComponent implements OnInit {
     this.BasketProductService.getBasketProducts(userId).subscribe((basket_products) => {
       this.basket_products = basket_products;
       this.updateMainButton();
+      this.calculateTotalSum();
     });
   }
 
@@ -95,12 +119,17 @@ export class BasketComponent implements OnInit {
     }
   }
 
+  calculateTotalSum(): void {
+    this.totalSum = this.basket_products.reduce((acc, b_product) => acc + (b_product.product.price * b_product.quantity), 0);
+  }
+
   incrementQuantity(b_product: any): void {
     b_product.quantity++;
-    this.BasketProductService.addToBasket(this.testUserDataId, b_product.product.id).subscribe(
+    this.BasketProductService.addToBasket(this.userData.id, b_product.product.id).subscribe(
       () => {
         console.log('Product quantity increased successfully');
         this.updateMainButton();
+        this.calculateTotalSum();
       },
       error => {
         console.error('Failed to increase product quantity', error);
@@ -111,10 +140,11 @@ export class BasketComponent implements OnInit {
   decrementQuantity(b_product: any): void {
     if (b_product.quantity > 1) {
       b_product.quantity--;
-      this.BasketProductService.removeFromBasket(this.testUserDataId, b_product.product.id, 1).subscribe(
+      this.BasketProductService.removeFromBasket(this.userData.id, b_product.product.id, 1).subscribe(
         () => {
           console.log('Product quantity decreased successfully');
           this.updateMainButton();
+          this.calculateTotalSum();
         },
         error => {
           console.error('Failed to decrease product quantity', error);
@@ -127,10 +157,11 @@ export class BasketComponent implements OnInit {
 
   removeProduct(productId: string, delete_all: boolean = false): void {
     this.basket_products = this.basket_products.filter(b_product => b_product.product.id !== productId);
-    this.BasketProductService.removeFromBasket(this.testUserDataId, productId, 1, delete_all).subscribe(
+    this.BasketProductService.removeFromBasket(this.userData.id, productId, 1, delete_all).subscribe(
       () => {
         console.log('Product removed successfully');
         this.updateMainButton();
+        this.calculateTotalSum();
       },
       error => {
         console.error('Failed to remove product', error);
@@ -139,11 +170,12 @@ export class BasketComponent implements OnInit {
   }
 
   removeAllProducts(): void {
-    this.BasketProductService.removeAllFromBasket(this.testUserDataId).subscribe(
+    this.BasketProductService.removeAllFromBasket(this.userData.id).subscribe(
       () => {
         this.basket_products = [];
         console.log('All products removed successfully');
         this.updateMainButton();
+        this.calculateTotalSum();
       },
       error => {
         console.error('Failed to remove all products', error);
