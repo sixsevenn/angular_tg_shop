@@ -296,8 +296,6 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    z-index: 1000;
-    overflow-y: auto;
 }
 
 .basket-title-keeper {
@@ -332,9 +330,9 @@ body {
     padding-left: 3vw;
     padding-right: 3vw;
     margin: 1px;
-    border-radius: 5px;
+    border-radius: 1.5vw;
     width: 93%;
-    height: 25vw;
+    height: 20vw;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     
 }
@@ -362,7 +360,7 @@ body {
     flex-direction: column;
     /* justify-content: space-between; */
     width: 50%;
-    height: 60%;
+    height: 75%;
     /* background-color: #fff; */
 }
 

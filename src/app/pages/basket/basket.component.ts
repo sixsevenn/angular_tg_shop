@@ -12,7 +12,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
   template: `
     <div class="basket">
       <div class="basket-title-keeper">
-        <div class="basket-title">Заказ {{this.userData.id}}</div>
+        <div class="basket-title">Заказ</div>
         <svg class="trash-bin-icon" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="24px" height="24px" (click)="removeAllProducts()">
           <path d="M 10 2 L 9 3 L 5 3 C 4.4 3 4 3.4 4 4 C 4 4.6 4.4 5 5 5 L 7 5 L 17 5 L 19 5 C 19.6 5 20 4.6 20 4 C 20 3.4 19.6 3 19 3 L 15 3 L 14 2 L 10 2 z M 5 7 L 5 20 C 5 21.1 5.9 22 7 22 L 17 22 C 18.1 22 19 21.1 19 20 L 19 7 L 5 7 z M 9 9 C 9.6 9 10 9.4 10 10 L 10 19 C 10 19.6 9.6 20 9 20 C 8.4 20 8 19.6 8 19 L 8 10 C 8 9.4 8.4 9 9 9 z M 15 9 C 15.6 9 16 9.4 16 10 L 16 19 C 16 19.6 15.6 20 15 20 C 14.4 20 14 19.6 14 19 L 14 10 C 14 9.4 14.4 9 15 9 z"/>
         </svg>
@@ -25,7 +25,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
         <div class="basket_info">
           <div class="basket-product-name">{{ b_product.product.name }}</div>
           <div class="basket-line-price-weight">
-            <div class="basket-product-price"> {{ b_product.product.price }} ₽ </div>
+            <div class="basket-product-price"> {{ b_product.product.price * b_product.quantity }} ₽ </div>
             <!-- <div> / </div> -->
             <div class="basket-product-weight"> {{ b_product.product.weight }} г </div>
           </div>
@@ -67,9 +67,9 @@ export class BasketComponent implements OnInit {
         this.loadBasketProducts(this.userData.id);
     } else {
         console.log("UserData absent")
-        // this.testUserDataId = "1040154933";
+        this.testUserDataId = "1040154933";
         // перед деплоем поменять все testUserId на this.userData.id
-        // this.loadBasketProducts("1040154933");
+        this.loadBasketProducts("1040154933");
     }
 
     this.telegram.BackButton.show();
@@ -97,7 +97,7 @@ export class BasketComponent implements OnInit {
 
   incrementQuantity(b_product: any): void {
     b_product.quantity++;
-    this.BasketProductService.addToBasket(this.userData.id, b_product.product.id).subscribe(
+    this.BasketProductService.addToBasket(this.testUserDataId, b_product.product.id).subscribe(
       () => {
         console.log('Product quantity increased successfully');
         this.updateMainButton();
@@ -111,7 +111,7 @@ export class BasketComponent implements OnInit {
   decrementQuantity(b_product: any): void {
     if (b_product.quantity > 1) {
       b_product.quantity--;
-      this.BasketProductService.removeFromBasket(this.userData.id, b_product.product.id, 1).subscribe(
+      this.BasketProductService.removeFromBasket(this.testUserDataId, b_product.product.id, 1).subscribe(
         () => {
           console.log('Product quantity decreased successfully');
           this.updateMainButton();
@@ -127,7 +127,7 @@ export class BasketComponent implements OnInit {
 
   removeProduct(productId: string, delete_all: boolean = false): void {
     this.basket_products = this.basket_products.filter(b_product => b_product.product.id !== productId);
-    this.BasketProductService.removeFromBasket(this.userData.id, productId, 1, delete_all).subscribe(
+    this.BasketProductService.removeFromBasket(this.testUserDataId, productId, 1, delete_all).subscribe(
       () => {
         console.log('Product removed successfully');
         this.updateMainButton();
@@ -139,7 +139,7 @@ export class BasketComponent implements OnInit {
   }
 
   removeAllProducts(): void {
-    this.BasketProductService.removeAllFromBasket(this.userData.id).subscribe(
+    this.BasketProductService.removeAllFromBasket(this.testUserDataId).subscribe(
       () => {
         this.basket_products = [];
         console.log('All products removed successfully');
