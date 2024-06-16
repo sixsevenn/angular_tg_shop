@@ -1,10 +1,9 @@
-import { Component, OnInit, inject} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { BasketProductService } from '../../services/basketProduct.service';
 import { TelegramService } from '../../services/telegram.service';
 import { ShopComponent } from '../shop/shop.component';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-
 
 @Component({
   selector: 'app-basket',
@@ -51,11 +50,10 @@ export class BasketComponent implements OnInit {
   route = inject(ActivatedRoute);
   router = inject(Router);
 
-
   constructor(private BasketProductService: BasketProductService) {
     this.goBack = this.goBack.bind(this);
   }
-  
+
   goBack(): void {
     this.router.navigate(['/']).then(() => {
       window.location.reload();
@@ -69,28 +67,40 @@ export class BasketComponent implements OnInit {
         this.loadBasketProducts(this.userData.id);
     } else {
         console.log("UserData absent")
-        this.testUserDataId = "1040154933";
+        // this.testUserDataId = "1040154933";
         // перед деплоем поменять все testUserId на this.userData.id
-        this.loadBasketProducts("1040154933");
-
+        // this.loadBasketProducts("1040154933");
     }
 
     this.telegram.BackButton.show();
     this.telegram.BackButton.onClick(this.goBack);
+
+    this.telegram.MainButton.setText('Заказ');
+    this.telegram.MainButton.show;
   }
 
   loadBasketProducts(userId: string): void {
     this.BasketProductService.getBasketProducts(userId).subscribe((basket_products) => {
       this.basket_products = basket_products;
+      this.updateMainButton();
     });
   }
 
+  updateMainButton(): void {
+    const totalProducts = this.basket_products.reduce((acc, b_product) => acc + b_product.quantity, 0);
+    if (totalProducts > 0) {
+      this.telegram.MainButton.show();
+    } else {
+      this.telegram.MainButton.hide();
+    }
+  }
 
   incrementQuantity(b_product: any): void {
     b_product.quantity++;
     this.BasketProductService.addToBasket(this.userData.id, b_product.product.id).subscribe(
       () => {
         console.log('Product quantity increased successfully');
+        this.updateMainButton();
       },
       error => {
         console.error('Failed to increase product quantity', error);
@@ -104,6 +114,7 @@ export class BasketComponent implements OnInit {
       this.BasketProductService.removeFromBasket(this.userData.id, b_product.product.id, 1).subscribe(
         () => {
           console.log('Product quantity decreased successfully');
+          this.updateMainButton();
         },
         error => {
           console.error('Failed to decrease product quantity', error);
@@ -119,6 +130,7 @@ export class BasketComponent implements OnInit {
     this.BasketProductService.removeFromBasket(this.userData.id, productId, 1, delete_all).subscribe(
       () => {
         console.log('Product removed successfully');
+        this.updateMainButton();
       },
       error => {
         console.error('Failed to remove product', error);
@@ -131,18 +143,17 @@ export class BasketComponent implements OnInit {
       () => {
         this.basket_products = [];
         console.log('All products removed successfully');
+        this.updateMainButton();
       },
       error => {
         console.error('Failed to remove all products', error);
       }
     );
   }
-  
 
   ngOnDestroy(): void {
     this.telegram.BackButton.offClick(this.goBack);
   }
 }
-
 
 export default BasketComponent;

@@ -282,6 +282,9 @@ body {
     display: none;
 }
 
+
+/* Корзина */
+
 .basket {
     top: 0;
     left: 0;
@@ -417,4 +420,32 @@ body {
     cursor: pointer;
 }
 
- 
+
+/* Доставка и оплата */
+
+.shippingPayment {
+    padding: 20px;
+}
+.shippingPayment h2 {
+    margin-bottom: 20px;
+}
+.shippingPayment form {
+    display: flex;
+    flex-direction: column;
+}
+.shippingPayment form div {
+    margin-bottom: 10px;
+}
+.shippingPayment label {
+    margin-bottom: 5px;
+}
+.shippingPayment input,
+.shippingPayment select {
+    padding: 5px;
+    font-size: 16px;
+}
+.shippingPayment button {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 16px;
+}
