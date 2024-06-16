@@ -2,13 +2,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { BasketProductService } from '../../services/basketProduct.service';
 import { TelegramService } from '../../services/telegram.service';
 import { ShopComponent } from '../shop/shop.component';
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { CommonModule, Location } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-basket',
   standalone: true,
-  imports: [CommonModule, ShopComponent],
+  imports: [CommonModule, ShopComponent, RouterLink],
   template: `
     <div class="basket">
       <div class="basket-title-keeper">
@@ -18,7 +18,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
         </svg>
       </div>
 
-      <div class="basket_card" *ngFor="let b_product of basket_products">
+      <div class="basket_card" [routerLink]="'/product/' + b_product.product.id" *ngFor="let b_product of basket_products">
         <div class="basket_img_div">
           <img class="basket-card-img" [src]="'http://localhost:5000/' + b_product.product.img">
         </div>
@@ -30,11 +30,11 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
           </div>
         </div>
         <div class="basket_quantity">
-          <img class="btn-icon-minus" src="assets/images/minus-30.png" (click)="decrementQuantity(b_product)">
+          <img class="btn-icon-minus" src="assets/images/minus-30.png" (click)="decrementQuantity(b_product, $event)">
           <div class="quantity-keeper">
             <span class="btn-text">{{ b_product.quantity }}</span>
           </div>
-          <img class="btn-icon-plus" src="assets/images/plus-30.png" (click)="incrementQuantity(b_product)">
+          <img class="btn-icon-plus" src="assets/images/plus-30.png" (click)="incrementQuantity(b_product, $event)">
           </div>
       </div>
 
@@ -73,15 +73,14 @@ export class BasketComponent implements OnInit {
   router = inject(Router);
   totalSum: number = 0;
 
-  constructor(private BasketProductService: BasketProductService) {
+  constructor(private BasketProductService: BasketProductService, private location: Location) {
     this.goBack = this.goBack.bind(this);
   }
 
   goBack(): void {
-    this.router.navigate(['/']).then(() => {
-      window.location.reload();
-    });
+    this.location.back();
   }
+
 
   ngOnInit(): void {
     const savedUserData = localStorage.getItem('userData');
@@ -123,7 +122,8 @@ export class BasketComponent implements OnInit {
     this.totalSum = this.basket_products.reduce((acc, b_product) => acc + (b_product.product.price * b_product.quantity), 0);
   }
 
-  incrementQuantity(b_product: any): void {
+  incrementQuantity(b_product: any, event: MouseEvent): void {
+    event.stopPropagation();
     b_product.quantity++;
     this.BasketProductService.addToBasket(this.userData.id, b_product.product.id).subscribe(
       () => {
@@ -137,7 +137,8 @@ export class BasketComponent implements OnInit {
     );
   }
 
-  decrementQuantity(b_product: any): void {
+  decrementQuantity(b_product: any, event: MouseEvent): void {
+    event.stopPropagation();
     if (b_product.quantity > 1) {
       b_product.quantity--;
       this.BasketProductService.removeFromBasket(this.userData.id, b_product.product.id, 1).subscribe(

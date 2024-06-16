@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { IProduct, ProductService } from '../../services/products.service';
 import { TelegramService } from '../../services/telegram.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 
 @Component({
   selector: 'app-product',
@@ -26,14 +26,12 @@ export class ProductComponent implements OnInit, OnDestroy {
   route = inject(ActivatedRoute);
   router = inject(Router);
 
-  constructor() {
+  constructor(private location: Location) {
     this.goBack = this.goBack.bind(this);
   }
 
   goBack(): void {
-    this.router.navigate(['/']).then(() => {
-      window.location.reload();
-    });
+    this.location.back();
   }
 
   ngOnInit(): void {
