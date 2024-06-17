@@ -75,6 +75,13 @@ export class BasketComponent implements OnInit {
 
   constructor(private BasketProductService: BasketProductService, private location: Location) {
     this.goBack = this.goBack.bind(this);
+    this.goShippingPayment = this.goShippingPayment.bind(this);
+  }
+
+  goShippingPayment(): void {
+    this.router.navigate(['/shippingPayment']).then(() => {
+      window.location.reload();
+    });
   }
 
   goBack(): void {
@@ -99,6 +106,9 @@ export class BasketComponent implements OnInit {
 
     this.telegram.MainButton.setText('Заказ');
     this.telegram.MainButton.show;
+
+    this.telegram.MainButton.onClick(this.goShippingPayment);
+
   }
 
   loadBasketProducts(userId: string): void {
